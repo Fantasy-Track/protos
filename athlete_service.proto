@@ -1,0 +1,23 @@
+syntax = "proto3";
+import "resources.proto";
+package fantasytrack;
+option java_package = "com.fantasytrack.protos";
+import "google/protobuf/empty.proto";
+
+service Athletes {
+    rpc GetAthleteOwnership (OwnershipRequest) returns (OwnershipResponse) {}
+    rpc PullAthletes (google.protobuf.Empty) returns (google.protobuf.Empty) {}
+}
+
+message OwnershipRequest {
+    repeated string athlete_ids = 1;
+    string league_id = 2;
+}
+
+message OwnershipResponse {
+    repeated Athlete athletes = 1;
+}
+
+message AthleteProfileRequest {
+    string athlete_id = 1;
+}

@@ -1,0 +1,23 @@
+syntax = "proto3";
+package fantasytrack;
+option java_package = "com.fantasytrack.protos";
+
+message Athlete {
+    string id = 1;
+    string name = 2;
+    string gender = 3;
+    map<string, double> projections = 4;
+
+    repeated string primary_event_ids = 5;
+
+    oneof data {
+        OwnershipData ownership = 6;
+    }
+}
+
+message OwnershipData {
+    string team_id = 1;
+    string team_name = 2;
+    string assigned_position_id = 3;
+    bool owned = 4;
+}

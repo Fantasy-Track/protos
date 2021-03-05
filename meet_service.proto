@@ -1,0 +1,35 @@
+syntax = "proto3";
+package fantasytrack;
+option java_package = "com.fantasytrack.protos";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service Meet {
+    rpc GetAllMeets (GetMeetsRequest) returns (GetMeetsResponse) {}
+    rpc ChangeEnabledMeets (ChangeEnabledMeetsRequest) returns (GetMeetsResponse) {}
+    rpc PullMeetSchedule (google.protobuf.Empty) returns (GetMeetsResponse) {}
+}
+
+message ChangeEnabledMeetsRequest {
+    repeated string disabled_meet_ids = 1;
+    repeated string enabled_meet_ids = 2;
+}
+
+message GetMeetsResponse {
+    repeated MeetInfo meets = 1;
+}
+
+message MeetInfo {
+    string id = 1;
+    string name = 2;
+    google.protobuf.Timestamp date = 3;
+    bool has_results = 4;
+    bool enabled = 5;
+    bool locked = 6;
+    string athletic_id = 7;
+    string league_id = 8;
+}
+
+message GetMeetsRequest {
+    string league_id = 1;
+}

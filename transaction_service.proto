@@ -1,0 +1,72 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+package fantasytrack;
+option java_package = "com.fantasytrack.protos";
+
+service Transaction {
+    rpc Drop (DropRequest) returns (google.protobuf.Empty) {}
+    rpc Claim (ClaimRequest) returns (google.protobuf.Empty) {}
+
+    rpc Trade (TradeRequest) returns (google.protobuf.Empty) {}
+    rpc GetTradesWithTeam (TradeTeamQuery) returns (TradesResponse) {}
+    rpc GetAcceptedTradesInLeague (TradeLeagueQuery) returns (TradesResponse) {}
+    rpc GetTrade (TradeQuery) returns (TradeProposal) {}
+    rpc AcceptTrade (TradeProposalId) returns (google.protobuf.Empty) {}
+    rpc CancelTrade (TradeProposalId) returns (google.protobuf.Empty) {}
+    rpc RejectTrade(TradeProposalId) returns (google.protobuf.Empty) {}
+}
+
+message TradeQuery {
+    string id = 1;
+}
+
+message TradeLeagueQuery {
+    string league_id = 1;
+}
+
+message TradesResponse {
+    repeated TradeProposal proposals = 1;
+}
+
+message TradeProposal {
+    string id = 1;
+    map<string, string> offering_athletes = 2;
+    map<string, string> receiving_athletes = 3;
+    string proposingTeamId = 4;
+    string proposingTeamName = 5;
+    string acceptingTeamId = 6;
+    string acceptingTeamName = 7;
+    google.protobuf.Timestamp date = 8;
+    Status status = 9;
+
+    enum Status {
+        PENDING = 0;
+        REJECTED = 1;
+        ACCEPTED_WAITING = 2;
+        ACCEPTED_ENACTED = 3;
+        CANCELLED = 4;
+    }
+}
+
+message TradeProposalId {
+    string trade_id = 1;
+}
+
+message TradeTeamQuery {
+    string team_id = 1;
+}
+
+message DropRequest {
+    repeated string athlete_ids = 1;
+}
+
+message ClaimRequest {
+    string athlete_id = 1;
+}
+
+message TradeRequest {
+    repeated string offering_athletes = 1;
+    repeated string receiving_athletes = 2;
+    string acceptingTeamId = 3;
+}

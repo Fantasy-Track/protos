@@ -1,0 +1,18 @@
+syntax = "proto3";
+package fantasytrack;
+option java_package = "com.fantasytrack.protos";
+import "google/protobuf/timestamp.proto";
+
+service DraftStatus {
+    rpc GetDraftStatus (DraftStatusRequest) returns (DraftStatusResponse) {}
+}
+
+message DraftStatusRequest {
+    string league_id = 1;
+}
+
+message DraftStatusResponse {
+    string league_name = 1;
+    google.protobuf.Timestamp start_time = 2;
+    string ip_address = 3;
+}

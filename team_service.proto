@@ -1,0 +1,66 @@
+syntax = "proto3";
+import "resources.proto";
+import "google/protobuf/empty.proto";
+package fantasytrack;
+option java_package = "com.fantasytrack.protos";
+
+service Teams {
+    rpc GetTeamRoster (GetRosterRequest) returns (TeamLineup) {}
+    rpc EditRoster (EditRosterRequest) returns (TeamLineup) {}
+	rpc GetOwnedTeams (OwnedTeamsRequest) returns (OwnedTeamsResponse) {}
+	rpc GetTeamListings (TeamListingsRequest) returns (TeamListingsResponse) {}
+    rpc DeleteTeam (DeleteTeamRequest) returns (google.protobuf.Empty) {}
+    rpc EditTeamName (TeamNameRequest) returns (TeamInfo) {}
+    rpc GetTeamInfo (TeamInfoRequest) returns (TeamInfo) {}
+}
+
+message DeleteTeamRequest {
+    string id = 1;
+}
+
+message TeamNameRequest {
+    string name = 1;
+}
+
+message TeamListingsRequest {
+    string league_id = 1;
+}
+
+message TeamInfoRequest {
+    string id = 1;
+}
+
+message TeamListingsResponse {
+    repeated TeamInfo teams = 1;
+}
+
+message OwnedTeamsRequest {
+	string owner_id = 1;
+}
+
+message OwnedTeamsResponse {
+	repeated TeamInfo teams = 1;
+}
+
+message TeamInfo {
+	string id = 1;
+	string name = 2;
+	string league_id = 3;
+	double fantasy_points = 4;
+	string owner_name = 5;
+    string league_name = 6;
+}
+
+message GetRosterRequest {
+	string team_id = 1;
+    string meet_id = 2;
+}
+
+message EditRosterRequest {
+	string athlete_id = 2;
+	string event_id = 3;
+}
+
+message TeamLineup {
+	repeated Athlete athletes = 1;
+}

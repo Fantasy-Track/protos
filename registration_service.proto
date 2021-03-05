@@ -1,0 +1,36 @@
+syntax = "proto3";
+package fantasytrack;
+option java_package = "com.fantasytrack.protos";
+import "google/protobuf/empty.proto";
+
+service Registration {
+    rpc CreateTeam (CreateTeamRequest) returns (CreateTeamResponse) {}
+    rpc CanJoinLeague (CanJoinRequest) returns (CanJoinResponse) {}
+    rpc CreateAccount (CreateAccountRequest) returns (google.protobuf.Empty) {}
+    rpc LoginOwner (LoginRequest) returns (google.protobuf.Empty) {}
+}
+
+message LoginRequest {}
+
+message CreateAccountRequest {
+    string owner_name = 1;
+}
+
+message CanJoinRequest {
+    string league_id = 1;
+}
+
+message CanJoinResponse {
+    bool can_join = 1;
+    string message = 2;
+}
+
+message CreateTeamRequest {
+    string team_name = 1;
+    string league_id = 2;
+}
+
+message CreateTeamResponse {
+    string team_id = 1;
+    string league_id = 2;
+}
